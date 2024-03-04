@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex Matcher</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('https://png.pngtree.com/thumb_back/fh260/back_pic/03/89/08/5457d7c12177f21.jpg') center/cover no-repeat;
+}
+
+
+        #container {
+            background-color: #7e94a2;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 1s;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Regex Matcher</h1>
+        <form method="post" action="{{ url_for('results') }}">
+            <label for="testString">Test String:</label>
+            <input type="text" id="testString" name="testString" required>
+
+            <label for="regexPattern">Regular Expression:</label>
+            <input type="text" id="regexPattern" name="regexPattern" required>
+
+            <button type="button" onclick="matchRegex()">Match</button>
+        </form>
+ 
+            <label for="email">Email:</label>
+            <input type="email" name="email" value="" required>
+            <button type="button" onclick="validateEmail()">Validate</button>
+        </form>
+
+      
+        <div id="result"></div>
+        <div id="validateEmail"></div>
+    </div>
+
+    <script>
+        function matchRegex() {
+            var testString = document.getElementById('testString').value;
+            var regexPattern = document.getElementById('regexPattern').value;
+
+            var regex = new RegExp(regexPattern, 'g');
+            var matches = testString.match(regex);
+
+            var resultElement = document.getElementById('result');
+            resultElement.innerHTML = "<strong>Matches:</strong> " + (matches ? matches.join(', ') : 'No matches found');
+
+            changeBackgroundColor();
+        }
+        function validateEmail() {
+            var email = document.getElementsByName('email')[0].value;
+            var isValid = /\S+@\S+\.\S+/.test(email);
+
+            var resultElement = document.getElementById('result');
+            resultElement.innerHTML = "<strong>Email Validation:</strong> " + (isValid ? 'Valid' : 'Invalid');
+
+            changeBackgroundColor();
+        }
+
+
+        function changeBackgroundColor() {
+            var container = document.getElementById('container');
+            var randomColor = getRandomColor();
+            container.style.backgroundColor = randomColor;
+        }
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Change background color every 5 seconds (5000 milliseconds)
+        setInterval(changeBackgroundColor, 5000);
+    </script>
+</body>
+
+</html>
